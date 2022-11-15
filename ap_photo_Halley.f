@@ -408,10 +408,10 @@ c     create an image
       do 900 kk=3,7
       axlen(kk)=1
   900 continue
-      call imcrea(imnew,axlen,naxis,dtype,ier)
+c      call imcrea(imnew,axlen,naxis,dtype,ier)
       if(ier.ne.0) goto 999
 c     open the image
-      call imopen(imnew,3,imn,ier)
+c      call imopen(imnew,3,imn,ier)
       if(ier.ne.0) goto 999
 c     read the array into the image
       do 980 k1=1,256
@@ -420,11 +420,11 @@ c     read the array into the image
       k3=(k11*256)+k2
       avect(k2)=array(k3)
   960 continue
-      call impl2r(imn,avect,k1,ier)
+c      call impl2r(imn,avect,k1,ier)
       if(ier.ne.0) goto 999
   980 continue
 c     close the image
-      call imclos(imn,ier)
+c      call imclos(imn,ier)
       if(ier.ne.0) goto 999
 c
       do 990 n=1,numap
@@ -436,10 +436,10 @@ c
       write(11,996) date, (aper(n), n=1,numap)
   994 format(f6.4)
   995 format(1x,2(1pe12.4))
-  996 format(1x,6(1pe13.5))
-      stop
+ 996  format(1x,6(1pe13.5))
+ 999  stop
 c     print error messages
-  999 call imemsg(ier,errmsg)
+c  999 call imemsg(ier,errmsg)
       write(*,'("error:",a80)') errmsg
       end
  
