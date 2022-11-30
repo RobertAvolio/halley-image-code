@@ -45,8 +45,9 @@ c
       twopi=pi*2.0
       conv=pi/180.0
 
-      print*,'Enter the file name to be read: '
-      read*,fileName
+      call get_command_argument(1, fileName)
+c      print*,'Enter the file name to be read: '
+c      read*,fileName
       
       open (1, file = fileName, status='old')
       
@@ -533,7 +534,7 @@ c     (ran2 renamed rand2)
           iy=idum
       endif
       j=1+(97*iy)/m
-      if(j.gt.97.or.j.lt.1) pause
+c      if(j.gt.97.or.j.lt.1) pause
       iy=ir(j)
       rand2=iy*rm
       if(rand2.lt.1.0e-10) rand2=1.0e-10
