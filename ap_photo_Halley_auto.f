@@ -51,15 +51,20 @@ c      read*,fileName
       
       open (1, file = fileName, status='old')
       
-      read(1,*) imnew
+      imnew = fileName
       read(1,*) helio
+      print*, 'helio: ', helio
       read(1,*) didist
+      print*, 'didist: ', didist
       read(1,*) scale
+      print*, 'scale', scale
       pix=725.3*scale*didist
 c      print*,'give cometographic longitude and latitude'
 c     print*,'of the center of the active region in degrees'
       read(1,*) cenlon
+      print*, 'cenlon: ', cenlon
       read(1,*) cenlat
+      print*, 'cenlat: ', cenlat
       cenlon=cenlon*conv
       cenlat=cenlat*conv
       ccenla=cos(cenlat)
@@ -67,6 +72,7 @@ c     print*,'of the center of the active region in degrees'
 c      print*,'give radius of the active region in degrees'
 c      print*,'[must be less than or equal to 90 deg]'
       read(1,*) raddeg
+      print*, 'raddeg: ', raddeg
       radar=raddeg*conv
       cradar=cos(radar)
 c      print*,'give std. deviation for the Gaussian dispersion of'
@@ -75,13 +81,16 @@ c      print*,'[gaussian distribution which assumes a flat cross'
 c      print*,' section truncates at a radial distance of 90 deg]'
 c      print*,' suggested std. deviation:  < 30 deg'
       read(1,*) sigjet
+      print*, 'sigjet: ', sigjet
       sigjet=sigjet*conv
       constr=1.0-exp(-0.125*(pi/sigjet)**2)
 c      print*,'give long. and lat. of the angular momentum'
 c      print*,'vector in the cometocentric ecliptic system'
 c     print*,'in degrees'
       read(1,*) angra
+      print*, 'angra: ', angra
       read(1,*) angdec
+      print*, 'angdec: ', angdec
       angra=angra*conv
       angdec=angdec*conv
       cangde=cos(angdec)
@@ -91,7 +100,9 @@ c      print*,'in the cometocentric ecliptic system'
 c     print*,'in degrees'
 c     =====================================================================
       read(1,*) solra
+      print*, 'solra: ', solra
       read(1,*) soldec
+      print*, 'soldec: ', soldec
       solra=solra*conv
       soldec=soldec*conv
       csolde=cos(soldec)
@@ -103,7 +114,9 @@ c      print*,'give long. and lat. of the Earth direction'
 c     print*,'in the cometocentric ecliptic system'
 c      print*,'in degrees'
       read(1,*) earra
+      print*, 'earra: ', earra
       read(1,*) eardec
+      print*, 'eardec: ', eardec
       earra=earra*conv
       eardec=eardec*conv
       cearde=cos(eardec)
@@ -113,10 +126,12 @@ c      print*,'in degrees'
 c
 c      print*,'give number of apertures (<6) for aperture photometry'
       read(1,*) numap
+      print*, 'numap: ', numap
       do 100 n=1,numap
 c      print*,'give aperture radius in pixels for aperture number',n
 c      print*,'[note: aperture radius must be > seeing]'
          read(1,*) rad(n)
+         print*, 'rad ', n, ': ', rad(n)
 c     convert aperure radii from pixels to km
          rad(n)=rad(n)*pix
  100  continue
@@ -153,6 +168,7 @@ c
 c      print*,'give angle between the angular momentum vector'
 c      print*,'and the polar axis in degrees [0 for PA rotation]'
       read(1,*) angthe
+      print*, 'angthe: ', angthe
       angthe=angthe*conv
       cangth=cos(angthe)
       sangth=sin(angthe)
@@ -160,24 +176,29 @@ c      print*,'give rotation period P_psi in days'
 c      print*,'[set to a large number if PA rotation]'
 c      print*,'Note: ratpsi>0 for LAM'
       read(1,*) ratpsi
+      print*, 'ratpsi: ', ratpsi
       ratpsi=twopi/(ratpsi*86400.0)
 c    
 c      print*,'give precession period P_phi in days'
 c      print*,'[set to rotation period if PA rotation]'
       read(1,*) ratphi
+      print*, 'ratphi: ', ratphi
       ratphi=twopi/(ratphi*86400.0)
 c      print*,'give the time of observation in days '
 c      print*,'from reference time (> 0 and < 10)'
       read(1,*) date
+      print*, 'date: ', date
 c
       timfin=date
 c      print*,'give the corresponding Euler angle for rotation'
 c      print*,'at reference time deg.'
       read(1,*) gpsi
+      print*, 'gpsi: ', gpsi
       gpsi=gpsi*conv
 c      print*,'give the corresponding Euler angle for precession'
 c      print*,'at reference time in deg.'
       read(1,*) gphi
+      print*, 'gphi: ', gphi
       gphi=gphi*conv
 c
       beta=grav*solmas/au/au
@@ -186,14 +207,17 @@ c      print*,'give radiation pressure acceleration in anti sunward'
 c      print*,'direction in cm/sec/sec for a parent/grain at 1 AU'
 c      print*,'beta = 1 is', beta,' cm/sec/sec'
       read(1,*) radg
+      print*, 'radg: ', radg
       radg=radg*(1.0e-5)/(helio**2)
 c      print*,'give radiation pressure acceleration in anti'
 c      print*,'sunward direction in cm/sec/sec for a radical at 1 AU'
 c      print*,'beta = 1 is', beta,' cm/sec/sec'
       read(1,*) radr
+      print*, 'radr: ', radr
       radr=radr*(1.0e-5)/(helio**2)
 c      print*,'give the mean parent/grain velocity in km/sec'
       read(1,*) velgr
+      print*, 'velgr: ', velgr
 c     print*,'give the range (2*FWHM) of parent/grain velocities in km/sec'
 c     print*,'(the velocity distribution is assumed to be'
 c     print*,' triangular and peaks at the mean velocity)'
@@ -201,6 +225,7 @@ c     read*,delvg
 c     delvg=0.5*delvg
 c      print*,'give radical velocity in km/sec'
       read(1,*) velr
+      print*, 'velr: ', velr
 c      print*,'give the exponential decay time for the daughter'
 c      print*,'production rate or the time required to achieve the'
 c      print*,'maximum daughter production rate (ie growth time)'
@@ -209,25 +234,32 @@ c      print*,'linear decay with equal growth and decay times'
 c      print*,'for the daughter production rate)'
 c      print*,'Look at the code to determine which case is used'
       read(1,*) lifgra
+      print*, 'lifgra: ', lifgra
       lifgra=lifgra/(helio**2)
 c      print*,'give life time of the radical in sec'
       read(1,*) lifrad
+      print*, 'lifrad: ', lifrad
       lifrad=lifrad/(helio**2)
 c      print*,'give time bin size in sec'
       read(1,*) timbin
+      print*, 'timbin: ', timbin
 c      print*,'give the maximum time jet action to be followed in sec'
       read(1,*) totime
+      print*, 'totime: ', totime
       num=nint(totime/timbin)
 c      print*,'give the number of locations in the active region to be'
 c      print*,'uniformly sampled (per time bin) [suggestion: > 100]'
       read(1,*) nregion
+      print*, 'nregion: ', nregion
 c      print*,'give the maximum number of parent/grain particles to be'
 c      print*,'emitted per sampled location (per time bin)'
 c      print*,'[suggestion: > 100]'
       read(1,*) binnum
+      print*, 'binnum: ', binnum
 c      print*,'give the constant background production rate as a'
 c      print*,'fraction of the maximum production rate'
       read(1,*) bg
+      print*, 'bg: ', bg
 c 
 c     calculate the position of a radical as seen from the spacecraft
 c
