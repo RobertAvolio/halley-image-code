@@ -267,10 +267,12 @@ c
       fphi=gphi+ratphi*(timfin*86400.0-timeob)
       fpsi=gpsi+ratpsi*(timfin*86400.0-timeob)
 c
+      
       do 200 k=1,65536
       array(k)=0.0
   200 continue
       idu=-1
+      
       do 800 i=1,num
 c
       do 700 ii=1, nregion
@@ -377,72 +379,129 @@ c
 c     calculate the specific parent/grain velocity
 c     call vran(delvg,deltav)
 c     velg=velgr+deltav-delvg
+      print*,'velg=velgr'
       velg=velgr
+      print*,'disg=disgr*velg'
       disg=disgr*velg
 c     consider effects due to dispersion in radial outflow
 c
+      print*,'disp=gasdev(idu)'
       disp=gasdev(idu)
 c     disg=disg0*(1.0+0.05*disp)
 c     5 percent chosen based on Dave's input.
 c
+      print*,'disg=disg*(1.0+0.05*disp)'
       disg=disg*(1.0+0.05*disp)
 c
+      print*,'6.1'
       azijet=twopi*rand2(idu)
+      print*,'6.2'
       cazije=cos(azijet)
+      print*,'6.3'
       disjet=sigjet*sqrt(-2.0*alog(1.0-constr*rand2(idu)))
+      print*,'6.4'
       cdisje=cos(disjet)
+      print*,'6.5'
       sdisje=sin(disjet)
+      print*,'6.6'
       decjet=asin(sspade*cdisje+cspade*sdisje*cazije)
+      print*,'6.7'
       cdecje=cos(decjet)
+      print*,'6.8'
       srajet=sdisje*sin(azijet)
+      print*,'6.9'
       crajet=cdisje*cspade-sdisje*sspade*cazije
+      print*,'6.10'
       rajet=atan2(srajet,crajet)
+      print*,'6.11'
       rajet=rajet+spara
+      print*,'6.12'
 c     calculate the distances travelled
+      print*,'6'
       xjet=cdecje*cos(rajet)
+      print*,'6.2'
       yjet=cdecje*sin(rajet)
+      print*,'6.21'
       zjet=sin(decjet)
+      print*,'6.22'
       gnorth=disg*(xjet*xnorth+yjet*ynorth+zjet*znorth)
+      print*,'6.23'
       geast=disg*(xjet*xeast+yjet*yeast)
+      print*,'6.24'
       time3=totime-time1
+      print*,'6.25'
       disr=velr*time3
+      print*,'6.26'
       disag=radg*timgra*(0.5*timgra+time3)
+      print*,'6.27'
       disar=0.5*radr*(time3**2)
+      print*,'6.28'
       disa=disag+disar
+      print*,'6.29'
       radazi=twopi*rand2(idu)
+      print*,'6.3'
       cradpr=sqrt(1.0-(rand2(idu))**2)
+      print*,'6.31'
       rnorth=disr*cradpr*cos(radazi)
+      print*,'6.32'
       reast=disr*cradpr*sin(radazi)
+      print*,'6.33'
       anorth=disa*xyznor
+      print*,'6.34'
       aeast=disa*xyzeas
+      print*,'6.35'
       dirn=gnorth+rnorth+anorth
+      print*,'6.36'
       dire=geast+reast+aeast
+      print*,'6.37'
       totn=dirn*cpa+dire*spa
+      print*,'6.38'
       tote=dire*cpa-dirn*spa
+      print*,'6.39'
 c
       totr=sqrt(totn*totn+tote*tote)
 c
+      print*,'6.4'
       do 400 n=1,numap
-      if(totr.lt.rad(n)) then 
+      print*,'6.5'
+      if(totr.lt.rad(n)) then
+      print*,'6.6'
+      print*,'numap: ', numap
+      print*,'aper #: ', n  
       aper(n)=aper(n)+1.0
       endif
+      print*,'6.7'
  400  continue
 c
 c     write data into an array
+      print*,'7'
       numnor=nint(128.5+totn/pix)
+      print*,'7.1'
       if(numnor.lt.1) goto 600
+      print*,'7.2'
       if(numnor.gt.256) goto 600
+      print*,'7.3'
       numeas=nint(128.5-tote/pix)
+      print*,'7.4'
       if(numeas.lt.1) goto 600
+      print*,'7.5'
       if(numeas.gt.256) goto 600
+      print*,'7.6'
       numnor1=numnor-1
+      print*,'7.7'
       k=(numnor1*256)+numeas
+      print*,'7.8'
       array(k)=array(k)+1.0
-  600 continue
-  700 continue
-  800 continue
+      print*,'7.9'
+ 600  continue
+      print*,'600'
+ 700  continue
+      print*,'700'
+ 800  continue
+      print*,'800'
 c     create an image
       naxis=2
+      print*,'8.1'
       dtype=6
       axlen(1)=256
       axlen(2)=256
@@ -472,6 +531,7 @@ c
       aper(n)=alog10(aper(n))
   990 continue
 c
+      print*,'9'
       write(fileout,994)date
       open(11,file='output_'//fileout)
       write(11,996) date, (aper(n), n=1,numap)
@@ -532,17 +592,29 @@ c     by PRESS, FLANNERY, TEUKOLSKY, and VETTERLIN
       function gasdev(idum)
       data iset/0/
       if (iset.eq.0) then
+        print*,'gasdev0'
     1   v1=2.*rand2(idum)-1.
+        print*,'gasdev'
         v2=2.*rand2(idum)-1.
+        print*,'gasdev1'
         r=v1**2+v2**2
+        print*,'gasdev2'
         if(r.ge.1.)go to 1
+        print*,'gasdev3'
         fac=sqrt(-2.*log(r)/r)
+        print*,'gasdev4'
         gset=v1*fac
+        print*,'gasdev5'
         gasdev=v2*fac
+        print*,'gasdev6'
         iset=1
+        print*,'gasdev7'
       else
+        print*,'gasdev8'
         gasdev=gset
+        print*,'gasdev9'
         iset=0
+        print*,'gasdev10'
       endif
       return
       end
