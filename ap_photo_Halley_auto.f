@@ -279,57 +279,97 @@ c
 c
 c     calculate the cometographic longitude and latitude of the
 c     parent/grain to be emitted
-      azireg=twopi*rand2(idu)
-      cazire=cos(azireg)
-      disreg=acos(1.0-(rand2(idu))*(1.0-cradar))
-      cdisre=cos(disreg)
-      sdisre=sin(disreg)
-      comlat=asin(scenla*cdisre+ccenla*sdisre*cazire)
-      scomlo=sdisre*sin(azireg)
-      ccomlo=cdisre*ccenla-sdisre*scenla*cazire
-      comlon=atan2(scomlo,ccomlo)
-      comlon=comlon+cenlon
+         print*, "700.1"
+         azireg=twopi*rand2(idu)
+         print*, "700.2"
+         cazire=cos(azireg)
+         print*, "700.3"
+         disreg=acos(1.0-(rand2(idu))*(1.0-cradar))
+         print*, "700.4"
+         cdisre=cos(disreg)
+         print*, "700.5"
+         sdisre=sin(disreg)
+         print*, "700.6"
+         comlat=asin(scenla*cdisre+ccenla*sdisre*cazire)
+         print*, "700.7"
+         scomlo=sdisre*sin(azireg)
+         print*, "700.8"
+         ccomlo=cdisre*ccenla-sdisre*scenla*cazire
+         print*, "700.9"
+         comlon=atan2(scomlo,ccomlo)
+         print*, "700.10"
+         comlon=comlon+cenlon
+         print*,"700.11"
 c
 c     calculate the body fixed coordinates of the parent/grain origin
-      ccomla=cos(comlat) 
-      body1=ccomla*cos(comlon)
-      body2=ccomla*sin(comlon)
-      body3=sin(comlat)
+         print*,"700.12"
+         comla=cos(comlat)
+         print*,"700.13"
+         body1=ccomla*cos(comlon)
+         print*,"700.14"
+         body2=ccomla*sin(comlon)
+         print*,"700.15"
+         body3=sin(comlat)
+         print*,"700.16"
 c
-      time0=timbin*float(i)
-      angphi=ratphi*time0+fphi
-      angpsi=ratpsi*time0+fpsi
-      cangps=cos(angpsi)
-      sangps=sin(angpsi)
-      cangph=cos(angphi)
-      sangph=sin(angphi)
-      space1=body1*(cangps*cangph-sangps*sangph*cangth)
-     +       -body2*(sangps*cangph+cangps*sangph*cangth)
-     +       +body3*sangph*sangth
+         time0=timbin*float(i)
+         print*,"700.17"
+         angphi=ratphi*time0+fphi
+         print*,"700.18"
+         angpsi=ratpsi*time0+fpsi
+         print*,"700.19"
+         cangps=cos(angpsi)
+         print*,"700.20"
+         sangps=sin(angpsi)
+         print*,"700.21"
+         cangph=cos(angphi)
+         print*,"700.22"
+         sangph=sin(angphi)
+         print*,"700.23"
+         space1=body1*(cangps*cangph-sangps*sangph*cangth)
+     +        -body2*(sangps*cangph+cangps*sangph*cangth)
+     +        +body3*sangph*sangth
+         print*,"700.24"
       space2=body1*(cangps*sangph+sangps*cangph*cangth)
      +       -body2*(sangps*sangph-cangps*cangph*cangth)
-     +       -body3*cangph*sangth
+     +        -body3*cangph*sangth
+      print*,"700.25"
       space3=body1*sangps*sangth+body2*cangps*sangth+body3*cangth
+      print*,"700.26"
 c
 c     calculate the cometocentric latitude and longitude of the
 c     point of activity in space fixed momentum frame
 c
+      print*,"700.27"
       spalat=asin(space3)
+      print*,"700.28"
       cspala=cos(spalat)
+      print*,"700.29"
       sspala=sin(spalat)
+      print*,"700.30"
       spalon=atan2(space2,space1)
+      print*,"700.31"
       cspalo=cos(spalon)
+      print*,"700.32"
       sspalo=sin(spalon)
+      print*,"700.33"
 c
 c     calculate ecliptic longitude and latitude of the point of activity 
 c
       spadec=asin(sangde*sspala-cangde*cspala*cspalo)
+      print*,"700.34"
       cspade=cos(spadec)
+      print*,"700.35"
       sspade=sin(spadec)
+      print*,"700.36"
       sspara=cspala*sspalo
+      print*,"700.37"
       cspara=sspala*cangde+cspala*sangde*cspalo
+      print*,"700.38"
       spara=atan2(sspara,cspara)
+      print*,"700.39"
       spara=spara+angra
+      print*,"700.4"
 c
 c     determine whether the point of activity is in sunlight
 c
@@ -345,7 +385,8 @@ c
 c     Assume production rate is proportional to the insolation to the
 c     third power
 c
-c 300 nbin=nint(binnum*csunan*csunan*csunan)
+c     300 nbin=nint(binnum*csunan*csunan*csunan)
+      print*,"disgr=totime-time0"
       disgr=totime-time0
 c
 c     calculate the distance travelled based on empirical data for CN
@@ -366,15 +407,24 @@ c
 c     calculate for all the parents/grains emitted in the time bin
 c     under consideration
 c
+      print*,"600s"
       do 600 j=1,nbin
 c
+      print*,"600.1"
       call prod(lifgra,timgra)
+      print*,"600.2"
       time1=timgra+time0
+      print*,"600.3"
       if(time1.gt.totime) goto 600
+      print*,"600.4"
       fracr=rand2(idu)
+      print*,"600.5"
       timrad=-lifrad*alog(fracr)
+      print*,"600.6"
       time2=time1+timrad
+      print*,"600.7"
       if(time2.lt.totime) goto 600
+      print*,"600.8"
 c
 c     calculate the specific parent/grain velocity
 c     call vran(delvg,deltav)
