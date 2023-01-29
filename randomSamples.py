@@ -49,9 +49,9 @@ def main():
         
         ratpsi = random.uniform(0, 3024000)
         f.write(str(ratpsi) + "\n")
-        ratphi = 0
+        ratphi = 0.5
         f.write(str(ratphi) + "\n")
-        date = random.uniform(86400, 3024000)
+        date = random.uniform(86400, 864000)
         f.write(str(date) + "\n")
         gpsi = 0
         f.write(str(gpsi) + "\n")
@@ -71,9 +71,9 @@ def main():
         f.write(str(lifrad) + "\n")
         timbin = random.uniform(1800, 86400)
         f.write(str(timbin) + "\n")
-        totime = 0
-        while totime <= date:
-            totime = random.uniform(86400, 3024000)
+        totime = random.uniform(86400, 864000)
+        while date >= totime:
+            date = random.uniform(86400, 864000-1)
         f.write(str(totime) + "\n")
         # uses randrange so nregion/binnum are ints, 10001 not included so 10000 is the max
         nregion = random.randrange(100, 10001, 1)
