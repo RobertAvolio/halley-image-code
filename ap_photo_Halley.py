@@ -87,41 +87,6 @@ def main():
     nregion = int(f.readline())
     binnum = float(f.readline())
     bg = float(f.readline())
-    '''
-    print(helio)
-    print (didist)
-    print (scale)
-    print (cenlon)
-    print (cenlat)
-    print (raddeg)
-    print (sigjet)
-    print (angra)
-    print (angdec)
-    print (solra)
-    print (soldec)
-    print (earra)
-    print (eardec)
-    print (numap)
-    for i in range(len(rad)):
-        print (rad[i])
-    print (angthe)
-    print (ratpsi)
-    print (ratphi)
-    print (date)
-    print (gpsi)
-    print (gphi)
-    print (radg)
-    print (radr)
-    print (velgr)
-    print (velr)
-    print (lifgra)
-    print (lifrad)
-    print (timbin)
-    print (totime)
-    print (nregion)
-    print (binnum)
-    print (bg)
-    '''
 
     # Calculations:
     pix=725.3*scale*didist
@@ -301,21 +266,24 @@ def main():
             #
             # calculate for all the parents/grains emitted in the time bin under consideration
             #
-            
+
             for j in range(nbin):
                 timgra=-lifgra*math.log(random.uniform(0,1)) # replaced prod() function, only used once and could be condensed
                 parentToDaughter=timgra+time0
                 #print("Check continue 1, parentToDaughter totime: " + str(parentToDaughter) + " " + str(totime))
+                '''
                 if(parentToDaughter>totime):
                     continue
-                
+                '''
+
                 fracr=random.uniform(0,1)
                 timrad=-lifrad*math.log(fracr)
                 daughterNotDecayed=parentToDaughter+timrad
                 #print("Check continue 2, daughterNotDecayed totime: " + str(daughterNotDecayed) + " " + str(totime))
+                '''
                 if(daughterNotDecayed < totime):
                     continue
-                print("Past continues")
+                '''
                 #
                 # calculate the specific parent/grain velocity
                 #
@@ -337,9 +305,9 @@ def main():
 
                 azijet=twopi*random.uniform(0,1)
 
-                cazire=math.cos(azireg)
+                cazije=math.cos(azireg)
 
-                disjet=sigjet*sqrt(-2.0*math.log(1.0-constr*random.uniform(0,1)))
+                disjet=sigjet*math.sqrt(-2.0*math.log(1.0-constr*random.uniform(0,1)))
 
                 cdisje=math.cos(disjet)
 
@@ -361,7 +329,7 @@ def main():
                 # calculate the distances travelled
                 #
                 
-                xjet=cdecje*cos(rajet)
+                xjet=cdecje*math.cos(rajet)
 
                 yjet=cdecje*math.sin(rajet)
 
@@ -408,7 +376,7 @@ def main():
                 
                 numnor=int(128.5+totn/pix)
                 if(numnor >= 1 and numnor <= 256):
-                    numeas=nint(128.5-tote/pix)
+                    numeas=int(128.5-tote/pix)
                     if(numeas >= 1 and numeas <= 256):
                         numnor1=numnor-1
                         k=(numnor1*256)+numeas
@@ -431,9 +399,7 @@ def main():
 
     for kk in range(2,7):
         axlen.append(1)
-    # Removed, ier is never defined except through commented out imcrea call. 
-#    if(ier != 0):
-#        return
+
     #
     # read the array into the image
     #
@@ -446,13 +412,7 @@ def main():
         for col in range(256):
             pixelTable.write(str(array[row*256 + col]) + " ")
             
-
-    # Removed, ier is never defined except through commented out imcrea call.
-#        if(ier != 0):
-#            return
-
     out = open("output_" + str(date), "w")
-    
     
     out.write(str(date))
 
@@ -464,7 +424,6 @@ def main():
             out.write(str(aper[n]))  # moved to for loop for simplicity
         
     f.close()
-
     return
         
 
