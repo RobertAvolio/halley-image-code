@@ -37,7 +37,7 @@ def main():
         f.write(str(earra) + "\n")
         eardec = random.uniform(-90, 90)
         f.write(str(eardec) + "\n")
-        numap = random.randrange(0, 1, 1)
+        numap = random.randrange(1, 2, 1)
         # uses randrange so numap is an int
         f.write(str(numap) + "\n")
         for i in range(numap):
@@ -47,7 +47,7 @@ def main():
         angthe = random.uniform(0, 90)
         f.write(str(angthe) + "\n")
         
-        ratpsi = random.uniform(0, 3024000)
+        ratpsi = random.uniform(0, 864)
         f.write(str(ratpsi) + "\n")
         ratphi = 0.5
         f.write(str(ratphi) + "\n")
@@ -80,7 +80,7 @@ def main():
         f.write(str(nregion) + "\n")
         binnum = random.randrange(100, 10000, 1)
         f.write(str(binnum) + "\n")
-        bg = random.uniform(0, 16384)
+        bg = random.uniform(0, 160)
         f.write(str(bg) + "\n")
         f.close()
 

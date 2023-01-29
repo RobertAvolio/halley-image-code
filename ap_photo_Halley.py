@@ -188,7 +188,6 @@ def main():
     
     for i in range(num):
         for j in range(nregion):
-            
             # calculate the cometographic longitude and latitude of the
             # parent/grain to be emitted
             azireg=twopi*random.uniform(0,1)
@@ -246,7 +245,7 @@ def main():
             #
             # determine whether the point of activity is in sunlight
             #
-
+            
             csunan=sspade*ssolde+cspade*csolde*math.cos(solra-spara)
             if(csunan < 0.0):
                 csunan=0.0
@@ -254,9 +253,8 @@ def main():
             n100=i%100
             if(n100 == 0):
                 timeto=time0-timeob
-
+                
             nbin=int(binnum*csunan)
-
             #
             # Assume production rate is proportional to the insolation to the third power
             #
@@ -266,11 +264,11 @@ def main():
             #
             # calculate for all the parents/grains emitted in the time bin under consideration
             #
-
-            for j in range(nbin):
+            for jbin in range(nbin):
+                #print("jbin loop #" + str(jbin))
                 timgra=-lifgra*math.log(random.uniform(0,1)) # replaced prod() function, only used once and could be condensed
                 parentToDaughter=timgra+time0
-                #print("Check continue 1, parentToDaughter totime: " + str(parentToDaughter) + " " + str(totime))
+
                 '''
                 if(parentToDaughter>totime):
                     continue
@@ -279,7 +277,7 @@ def main():
                 fracr=random.uniform(0,1)
                 timrad=-lifrad*math.log(fracr)
                 daughterNotDecayed=parentToDaughter+timrad
-                #print("Check continue 2, daughterNotDecayed totime: " + str(daughterNotDecayed) + " " + str(totime))
+
                 '''
                 if(daughterNotDecayed < totime):
                     continue
@@ -320,10 +318,9 @@ def main():
                 srajet=sdisje*math.sin(azijet)
 
                 crajet=cdisje*cspade-sdisje*sspade*cazije
-
+                
                 rajet=math.atan2(srajet,crajet)
-
-                rajet=rajet+spara
+                rajet+=spara
 
                 #
                 # calculate the distances travelled
@@ -429,19 +426,17 @@ def main():
 
 # Sampling Gaussian Distribution
 def gasdev():
-    
     r = 1
     
-    while(r >= 1):
+    while(r >= 1 or r == 0):
         v1 = random.uniform(-1,1)
         v2 = random.uniform(-1,1)
         r=v1**2+v2**2
-        
     
     fac=math.sqrt(-2*math.log(r)/r)
     gset=v1*fac
     gasdev=v2*fac
-    
+
     return gasdev
     
     
